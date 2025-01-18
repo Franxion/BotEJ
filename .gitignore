@@ -10,7 +10,6 @@ __pycache__/
 
 # Ignore log or temporary files
 *.log
-output_file.txt
 
 # Ignore SeleniumAttempt folder
 SeleniumAttempt/
