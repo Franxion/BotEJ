@@ -1,0 +1,16 @@
+# Ignore virtual environment
+VEnv_BotEasyJet/
+
+# Ignore Python cache files
+__pycache__/
+*.pyc
+
+# Ignore IDE-specific configuration
+.idea/
+
+# Ignore log or temporary files
+*.log
+output_file.txt
+
+# Ignore SeleniumAttempt folder
+SeleniumAttempt/
