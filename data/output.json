@@ -1,0 +1,83 @@
+[
+    {
+        "url": "https://www.easyjet.com/api/routepricing/v3/searchfares/GetAllFaresByDate?departureAirport=ZRH&arrivalAirport=FCO&currency=CHF&departureDateFrom=2025-04-01&departureDateTo=2025-04-01",
+        "status_code": 200,
+        "error": null,
+        "data": [
+            {
+                "flightNumber": "2987",
+                "departureAirport": "ZRH",
+                "arrivalAirport": "FCO",
+                "arrivalCountry": "ITA",
+                "outboundPrice": 29.95,
+                "returnPrice": 31.58,
+                "departureDateTime": "2025-04-01T08:30:00",
+                "arrivalDateTime": "2025-04-01T10:05:00"
+            },
+            {
+                "flightNumber": "2989",
+                "departureAirport": "ZRH",
+                "arrivalAirport": "FCO",
+                "arrivalCountry": "ITA",
+                "outboundPrice": 29.95,
+                "returnPrice": 31.58,
+                "departureDateTime": "2025-04-01T21:55:00",
+                "arrivalDateTime": "2025-04-01T23:30:00"
+            }
+        ]
+    },
+    {
+        "url": "https://www.easyjet.com/api/routepricing/v3/searchfares/GetAllFaresByDate?departureAirport=ZRH&arrivalAirport=FCO&currency=CHF&departureDateFrom=2025-04-02&departureDateTo=2025-04-02",
+        "status_code": 200,
+        "error": null,
+        "data": [
+            {
+                "flightNumber": "2987",
+                "departureAirport": "ZRH",
+                "arrivalAirport": "FCO",
+                "arrivalCountry": "ITA",
+                "outboundPrice": 35.45,
+                "returnPrice": 37.51,
+                "departureDateTime": "2025-04-02T08:30:00",
+                "arrivalDateTime": "2025-04-02T10:05:00"
+            },
+            {
+                "flightNumber": "2989",
+                "departureAirport": "ZRH",
+                "arrivalAirport": "FCO",
+                "arrivalCountry": "ITA",
+                "outboundPrice": 29.95,
+                "returnPrice": 31.58,
+                "departureDateTime": "2025-04-02T21:55:00",
+                "arrivalDateTime": "2025-04-02T23:30:00"
+            }
+        ]
+    },
+    {
+        "url": "https://www.easyjet.com/api/routepricing/v3/searchfares/GetAllFaresByDate?departureAirport=ZRH&arrivalAirport=FCO&currency=CHF&departureDateFrom=2025-04-03&departureDateTo=2025-04-03",
+        "status_code": 200,
+        "error": null,
+        "data": [
+            {
+                "flightNumber": "2987",
+                "departureAirport": "ZRH",
+                "arrivalAirport": "FCO",
+                "arrivalCountry": "ITA",
+                "outboundPrice": 30.95,
+                "returnPrice": 33.06,
+                "departureDateTime": "2025-04-03T08:30:00",
+                "arrivalDateTime": "2025-04-03T10:05:00"
+            },
+            {
+                "flightNumber": "2989",
+                "departureAirport": "ZRH",
+                "arrivalAirport": "FCO",
+                "arrivalCountry": "ITA",
+                "outboundPrice": 30.95,
+                "returnPrice": 33.06,
+                "departureDateTime": "2025-04-03T21:55:00",
+                "arrivalDateTime": "2025-04-03T23:30:00"
+            }
+        ]
+    }
+]
