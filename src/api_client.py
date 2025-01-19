@@ -63,16 +63,7 @@ class EasyJetAPIClient:
     ) -> APIResponse:
         """
         Fetch fares from the API for a specific date.
-
-        Args:
-            date: Date in YYYY-MM-DD format
-            departure: Optional departure airport code
-            arrival: Optional arrival airport code
-
-        Returns:
-            APIResponse object containing the results or error
         """
-        #wait a random delay between each request
         self._random_delay()
 
         try:
@@ -105,8 +96,29 @@ class EasyJetAPIClient:
             json_data = response.json()
             logger.info(f"Parsed JSON data: {json_data}")
 
+            # If we get here, we have valid JSON. Let's examine its structure
+            if isinstance(json_data, list):
+                logger.info(f"Response is a list with {len(json_data)} items")
+            elif isinstance(json_data, dict):
+                logger.info(f"Response is a dictionary with keys: {json_data.keys()}")
+            else:
+                logger.info(f"Response is of type: {type(json_data)}")
+
             # Convert raw API data to FlightFare objects
-            fares = [FlightFare.from_api_response(fare) for fare in response.json()]
+            fares = []
+            for fare in json_data:
+                try:
+                    fare_obj = FlightFare.from_api_response(fare)
+                    fares.append(fare_obj)
+                    logger.info(f"Successfully processed fare: {fare}")
+                except KeyError as e:
+                    logger.error(f"Missing key in fare data: {e}")
+                    logger.error(f"Problematic fare data: {fare}")
+                except Exception as e:
+                    logger.error(f"Error processing fare: {str(e)}")
+                    logger.error(f"Problematic fare data: {fare}")
+
+            logger.info(f"Processed {len(fares)} fares")
 
             return APIResponse(
                 url=response.url,
