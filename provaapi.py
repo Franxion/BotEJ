@@ -4,6 +4,11 @@ import requests
 from utils import generate_dates
 
 
+class EasyJetAPIError(Exception):
+    """Eccezione personalizzata per errori API"""
+    pass
+
+
 def fetch_fares_for_date(url, headers, querystring, date):
     """
     Fetch fares from the API for a specific date.
@@ -13,16 +18,34 @@ def fetch_fares_for_date(url, headers, querystring, date):
         querystring["departureDateTo"] = date
         response = requests.request("GET", url, headers=headers, params=querystring)
         response.raise_for_status()
-        return {
+        
+        result = {
             "url": response.url,
             "status_code": response.status_code,
             "data": response.json()
         }
+        
+        # Verifica errori nei dati
+        if not result["data"]:
+            raise EasyJetAPIError(f"No data returned for date {date}")
+            
+        return result
+        
     except requests.RequestException as e:
+        error_msg = f"Request failed for date {date}: {str(e)}"
+        print(f"Error: {error_msg}")
         return {
             "url": url,
             "status_code": None,
-            "error": str(e)
+            "error": error_msg
+        }
+    except Exception as e:
+        error_msg = f"Unexpected error for date {date}: {str(e)}"
+        print(f"Error: {error_msg}")
+        return {
+            "url": url,
+            "status_code": None,
+            "error": error_msg
         }
 
 
@@ -45,22 +68,43 @@ def save_results_to_file(results, output_file):
         json.dump(results, file, indent=4)
 
 
+class EasyJetAPI:
+    """Classe per gestire le richieste API di EasyJet"""
+    
+    BASE_URL = "https://www.easyjet.com/api/routepricing/v3/searchfares/GetAllFaresByDate"
+    
+    def __init__(self, departure_airport, arrival_airport, currency="CHF"):
+        self.querystring = {
+            "departureAirport": departure_airport,
+            "arrivalAirport": arrival_airport,
+            "currency": currency
+        }
+        self.headers = {}
+    
+    def fetch_fares_for_date(self, date):
+        """Recupera i prezzi per una data specifica"""
+        return fetch_fares_for_date(self.BASE_URL, self.headers, self.querystring.copy(), date)
+    
+    def fetch_fares_for_dates(self, start_date, num_days):
+        """Recupera i prezzi per un intervallo di date"""
+        return fetch_fares_for_dates(self.BASE_URL, self.headers, self.querystring.copy(), 
+                                   start_date, num_days)
+
+
 def main():
     """
     Main function to orchestrate the script.
     """
-    url = "https://www.easyjet.com/api/routepricing/v3/searchfares/GetAllFaresByDate"
-    querystring = {
-        "departureAirport": "ZRH",
-        "arrivalAirport": "FCO",
-        "currency": "CHF"
-    }
-    headers = {}
+    # Configurazione
     output_file = "output_file.json"
-    start_date = "2025-06-10"
+    start_date = "2025-05-04"
     num_days = 10
-
-    results = fetch_fares_for_dates(url, headers, querystring, start_date, num_days)
+    
+    # Creazione istanza API
+    api = EasyJetAPI("ZRH", "FCO")
+    
+    # Recupero dati
+    results = api.fetch_fares_for_dates(start_date, num_days)
     save_results_to_file(results, output_file)
     print(f"Data saved to {output_file}")
 
