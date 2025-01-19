@@ -84,13 +84,26 @@ class EasyJetAPIClient:
                 "departureDateTo": date
             }
 
-            logger.info(f"Fetching fares for date: {date}")
+            # Log the complete request details
+            logger.info(f"Making request to EasyJet API:")
+            logger.info(f"URL: {self.config.base_url}")
+            logger.info(f"Headers: {self.config.headers}")
+            logger.info(f"Query parameters: {querystring}")
+
             response = requests.get(
                 self.config.base_url,
                 headers=self.config.headers,
                 params=querystring
             )
             response.raise_for_status()
+
+            # Log the raw response
+            raw_response = response.text
+            logger.info(f"Raw API response: {raw_response}")
+
+            # Parse the JSON response
+            json_data = response.json()
+            logger.info(f"Parsed JSON data: {json_data}")
 
             # Convert raw API data to FlightFare objects
             fares = [FlightFare.from_api_response(fare) for fare in response.json()]

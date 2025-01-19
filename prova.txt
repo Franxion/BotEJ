@@ -1,0 +1,3 @@
+https://www.easyjet.com/api/routepricing/v3/searchfares/GetAllFaresByDate?departureAirport=ZRH&arrivalAirport=FCO&currency=EUR&departureDateFrom=2025-03-30&departureDateTo=2025-03-30
+
+https://www.easyjet.com/api/routepricing/v3/searchfares/GetAllFaresByDate?departureAirport=ZHR&arrivalAirport=FCO&currency=EUR&departureDateFrom=2025-05-05&departureDateTo=2025-05-05",

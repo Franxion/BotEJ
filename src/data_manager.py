@@ -56,18 +56,6 @@ class DataManager:
                      pretty_print: bool = True) -> Path:
         """
         Saves API responses to a JSON file with proper formatting.
-
-        Args:
-            responses: List of APIResponse objects to save
-            filename: Optional custom filename (will add .json if missing)
-            pretty_print: Whether to format JSON with indentation
-
-        Returns:
-            Path object pointing to the saved file
-
-        Raises:
-            IOError: If file writing fails
-            ValueError: If responses contain invalid data
         """
         try:
             # Generate or process filename
@@ -79,9 +67,15 @@ class DataManager:
 
             output_path = self.output_dir / filename
 
+            # Add debug logging to track the data flow
+            self.logger.info(f"Processing {len(responses)} API responses")
+
             # Prepare data for serialization
             serializable_data = []
-            for response in responses:
+            for response_idx, response in enumerate(responses):
+                self.logger.info(f"Processing response {response_idx + 1}")
+                self.logger.info(f"Response contains {len(response.data)} flight fares")
+
                 response_dict = {
                     "url": response.url,
                     "status_code": response.status_code,
@@ -93,22 +87,32 @@ class DataManager:
                     }
                 }
 
-                # Convert flight fares to dictionaries
-                for fare in response.data:
-                    fare_dict = {
-                        "flightNumber": fare.flight_number,
-                        "departureAirport": fare.departure_airport,
-                        "arrivalAirport": fare.arrival_airport,
-                        "arrivalCountry": fare.arrival_country,
-                        "outboundPrice": fare.outbound_price,
-                        "returnPrice": fare.return_price,
-                        "departureDateTime": fare.departure_datetime.isoformat(),
-                        "arrivalDateTime": fare.arrival_datetime.isoformat(),
-                        "flightDuration": round(fare.calculate_flight_duration(), 2)
-                    }
-                    response_dict["data"].append(fare_dict)
+                # Convert flight fares to dictionaries with detailed logging
+                for fare_idx, fare in enumerate(response.data):
+                    self.logger.info(f"Processing fare {fare_idx + 1} in response {response_idx + 1}")
+                    try:
+                        fare_dict = {
+                            "flightNumber": fare.flight_number,
+                            "departureAirport": fare.departure_airport,
+                            "arrivalAirport": fare.arrival_airport,
+                            "arrivalCountry": fare.arrival_country,
+                            "outboundPrice": fare.outbound_price,
+                            "returnPrice": fare.return_price,
+                            "departureDateTime": fare.departure_datetime.isoformat(),
+                            "arrivalDateTime": fare.arrival_datetime.isoformat(),
+                            "flightDuration": round(fare.calculate_flight_duration(), 2)
+                        }
+                        response_dict["data"].append(fare_dict)
+                        self.logger.info(f"Successfully processed fare {fare_idx + 1}")
+                    except AttributeError as e:
+                        self.logger.error(f"Failed to process fare {fare_idx + 1}: {e}")
+                        self.logger.error(f"Fare object content: {vars(fare)}")
+                    except Exception as e:
+                        self.logger.error(f"Unexpected error processing fare {fare_idx + 1}: {e}")
+                        self.logger.error(f"Fare object content: {vars(fare)}")
 
                 serializable_data.append(response_dict)
+                self.logger.info(f"Response {response_idx + 1} processed with {len(response_dict['data'])} fares")
 
             # Write to file with proper formatting
             with output_path.open("w", encoding='utf-8') as f:
@@ -120,52 +124,4 @@ class DataManager:
 
         except (IOError, ValueError) as e:
             self.logger.error(f"Failed to save results: {str(e)}")
-            raise
-
-    def load_results(self, filename: str) -> List[APIResponse]:
-        """
-        Loads previously saved results from a JSON file.
-
-        Args:
-            filename: Name of the file to load (with or without .json extension)
-
-        Returns:
-            List of APIResponse objects
-
-        Raises:
-            FileNotFoundError: If the specified file doesn't exist
-            json.JSONDecodeError: If the file contains invalid JSON
-        """
-        if not filename.endswith('.json'):
-            filename = f"{filename}.json"
-
-        file_path = self.output_dir / filename
-
-        try:
-            with file_path.open('r', encoding='utf-8') as f:
-                data = json.load(f)
-
-            # Convert JSON data back to APIResponse objects
-            responses = []
-            for response_data in data:
-                fare_objects = [
-                    FlightFare.from_api_response(fare)
-                    for fare in response_data['data']
-                ]
-
-                response = APIResponse(
-                    url=response_data['url'],
-                    status_code=response_data['status_code'],
-                    data=fare_objects,
-                    error=response_data.get('error')
-                )
-                responses.append(response)
-
-            return responses
-
-        except FileNotFoundError:
-            self.logger.error(f"File not found: {file_path}")
-            raise
-        except json.JSONDecodeError as e:
-            self.logger.error(f"Invalid JSON in file {file_path}: {str(e)}")
             raise

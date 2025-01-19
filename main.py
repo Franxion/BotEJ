@@ -49,6 +49,7 @@ def main():
     for date in dates:
         response = api_client.fetch_fares_for_date(date)
         responses.append(response)
+        print(f"found flight{response.data}")
 
     # Convert the output_dir string to a Path object
     output_path = Path(args.output_dir)

@@ -1,31 +1,51 @@
 [
     {
-        "url": "https://www.easyjet.com/api/routepricing/v3/searchfares/GetAllFaresByDate?departureAirport=ZRH&arrivalAirport=FCO&currency=EUR&departureDateFrom=2025-01-20&departureDateTo=2025-01-20",
+        "url": "https://www.easyjet.com/api/routepricing/v3/searchfares/GetAllFaresByDate?departureAirport=ZHR&arrivalAirport=FCO&currency=EUR&departureDateFrom=2025-05-01&departureDateTo=2025-05-01",
         "status_code": 200,
         "error": null,
         "data": [],
         "metadata": {
-            "saved_at": "2025-01-19T17:13:48.036050",
+            "saved_at": "2025-01-19T18:11:21.475855",
             "successful": true
         }
     },
     {
-        "url": "https://www.easyjet.com/api/routepricing/v3/searchfares/GetAllFaresByDate?departureAirport=ZRH&arrivalAirport=FCO&currency=EUR&departureDateFrom=2025-01-21&departureDateTo=2025-01-21",
+        "url": "https://www.easyjet.com/api/routepricing/v3/searchfares/GetAllFaresByDate?departureAirport=ZHR&arrivalAirport=FCO&currency=EUR&departureDateFrom=2025-05-02&departureDateTo=2025-05-02",
         "status_code": 200,
         "error": null,
         "data": [],
         "metadata": {
-            "saved_at": "2025-01-19T17:13:48.036050",
+            "saved_at": "2025-01-19T18:11:21.475855",
             "successful": true
         }
     },
     {
-        "url": "https://www.easyjet.com/api/routepricing/v3/searchfares/GetAllFaresByDate?departureAirport=ZRH&arrivalAirport=FCO&currency=EUR&departureDateFrom=2025-01-22&departureDateTo=2025-01-22",
+        "url": "https://www.easyjet.com/api/routepricing/v3/searchfares/GetAllFaresByDate?departureAirport=ZHR&arrivalAirport=FCO&currency=EUR&departureDateFrom=2025-05-03&departureDateTo=2025-05-03",
         "status_code": 200,
         "error": null,
         "data": [],
         "metadata": {
-            "saved_at": "2025-01-19T17:13:48.036050",
+            "saved_at": "2025-01-19T18:11:21.475855",
+            "successful": true
+        }
+    },
+    {
+        "url": "https://www.easyjet.com/api/routepricing/v3/searchfares/GetAllFaresByDate?departureAirport=ZHR&arrivalAirport=FCO&currency=EUR&departureDateFrom=2025-05-04&departureDateTo=2025-05-04",
+        "status_code": 200,
+        "error": null,
+        "data": [],
+        "metadata": {
+            "saved_at": "2025-01-19T18:11:21.475855",
+            "successful": true
+        }
+    },
+    {
+        "url": "https://www.easyjet.com/api/routepricing/v3/searchfares/GetAllFaresByDate?departureAirport=ZHR&arrivalAirport=FCO&currency=EUR&departureDateFrom=2025-05-05&departureDateTo=2025-05-05",
+        "status_code": 200,
+        "error": null,
+        "data": [],
+        "metadata": {
+            "saved_at": "2025-01-19T18:11:21.475855",
             "successful": true
         }
     }
