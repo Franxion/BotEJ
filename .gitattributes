@@ -1,0 +1,7 @@
+# Set default behavior to automatically normalize line endings
+* text=auto
+
+# Force specific files to use Unix-style line endings (LF)
+*.py text eol=lf
+*.ini text eol=lf
+*.mako text eol=lf
