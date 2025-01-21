@@ -1,16 +1,9 @@
-import logging
-from datetime import datetime, timedelta
 from pathlib import Path
 
-from src.api_client import EasyJetAPIClient
-from src.cli import parse_arguments
-from src.config import APIConfig
-from src.data_manager import DataManager
-
 import logging
-from datetime import datetime, timedelta
+from datetime import timedelta
 
-from src.api_client import EasyJetAPIClient
+from src.scraper.api_client import EasyJetAPIClient
 from src.config import APIConfig
 from src.data_manager import DataManager
 from src.cli import parse_arguments, parse_date

@@ -3,11 +3,10 @@ import logging
 from typing import List, Optional
 from datetime import datetime
 from pathlib import Path
-from sqlalchemy.orm import Session
 
-from .database import get_db
-from .models import APIResponse, FlightFare
-from .db_models import SearchOperation, Flight, PriceSnapshot
+from src.database import get_db
+from src.scraper.models import APIResponse
+from src.database.models import Flight, PriceSnapshot
 
 
 class DataManager:

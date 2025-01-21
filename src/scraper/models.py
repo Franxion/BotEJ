@@ -2,12 +2,12 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import Optional, List
 from sqlalchemy.orm import Session
-from .db_models import Flight as DBFlight
-from .db_models import Route as DBRoute
-from .db_models import Airport as DBAirport
-from .db_models import Airline as DBAirline
-from .db_models import PriceSnapshot as DBPriceSnapshot
-from .db_models import SearchOperation as DBSearchOperation
+from src.database.models  import Flight as DBFlight
+from src.database.models  import Route as DBRoute
+from src.database.models  import Airport as DBAirport
+from src.database.models  import Airline as DBAirline
+from src.database.models  import PriceSnapshot as DBPriceSnapshot
+from src.database.models  import SearchOperation as DBSearchOperation
 
 
 @dataclass

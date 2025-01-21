@@ -1,11 +1,13 @@
 import logging
 from random import uniform
 from time import sleep
-from typing import List, Optional
+from typing import Optional
 import requests
-from datetime import datetime, timedelta, time
+from datetime import datetime
+
 from src.config import APIConfig
-from src.models import APIResponse, FlightFare
+from .models import APIResponse, FlightFare
+from src.database.models import SearchOperation
 logger = logging.getLogger(__name__)
 
 

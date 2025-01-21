@@ -1,306 +1,156 @@
-# EasyJet Flight Fare Tracker
-
-[English](#english) | [Italiano](#italiano)
-
-# English
-
-A Python application that helps you track and analyze EasyJet flight fares over time. This project demonstrates important software development concepts including API interaction, data management, and modular application design.
-
-# EasyJet Flight Fare Tracker
-
-A Python application that helps you track and analyze EasyJet flight fares over time. This project demonstrates important software development concepts including API interaction, data management, and modular application design.
+# EasyJet Flight Price Tracker
 
 ## Project Overview
-
-Have you ever wondered how flight prices change over time? This application helps answer that question by automatically collecting and analyzing EasyJet flight fares. It's designed to be both a practical tool and a learning resource for understanding how modern web APIs and data processing work.
-
-### Key Features
-
-The application allows you to:
-- Search for flights across multiple dates
-- Compare prices between different routes
-- Save fare data for historical analysis
-- Configure searches with custom parameters
-- Handle API responses reliably and safely
-
-### Why This Project Matters
-
-Understanding how to interact with web APIs and process data is a crucial skill in modern software development. This project provides hands-on experience with:
-- Real-world API interaction
-- Data modeling and transformation
-- Error handling and logging
-- Configuration management
-- Command-line interface design
-
-## Getting Started
-
-### Prerequisites
-
-Before you begin, ensure you have Python 3.8 or higher installed. You can check your Python version by running:
-
-```bash
-python --version
-```
-
-### Installation
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/easyjet-fare-tracker.git
-   cd easyjet-fare-tracker
-   ```
-
-2. Create and activate a virtual environment:
-   ```bash
-   # On Windows
-   python -m venv venv
-   venv\Scripts\activate
-
-   # On macOS/Linux
-   python -m venv venv
-   source venv/bin/activate
-   ```
-
-3. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-## Basic Usage
-
-The simplest way to start is by running:
-
-```bash
-python main.py
-```
-
-This will search for flights using default settings (Zurich to Rome for the next three days). To customize your search:
-
-```bash
-python main.py --start-date 2025-02-01 --days 5 --departure-airport LHR --arrival-airport CDG
-```
-
-For more detailed usage instructions, see our [Usage Documentation](docs/usage.md).
+This project is a flight price tracking system that currently focuses on EasyJet flights. It scrapes flight pricing data from EasyJet's API and stores it in a PostgreSQL database for analysis. The system is designed with modularity in mind, allowing for future expansion to track other airlines.
 
 ## Project Structure
-
-The project is organized into several modules, each with a specific responsibility:
-
 ```
-easyjet-fare-tracker/
+Bot Easyjet/
 ├── src/
-│   ├── api_client.py    # Handles API communication
-│   ├── cli.py          # Command-line interface
-│   ├── config.py       # Configuration management
-│   ├── data_manager.py # Data persistence
-│   └── models.py       # Data structures
-├── docs/
-│   ├── api.md          # API documentation
-│   ├── development.md  # Development guide
-│   └── usage.md        # Usage instructions
-├── main.py             # Application entry point
-└── requirements.txt    # Project dependencies
+│   ├── __init__.py
+│   ├── data_manager.py    # Handles data persistence and retrieval
+│   ├── cli.py            # Command line interface utilities
+│   ├── config.py         # Configuration management
+│   │
+│   ├── database/         # Database-related modules
+│   │   ├── __init__.py
+│   │   ├── models.py     # SQLAlchemy database models
+│   │   └── connection.py # Database connection handling
+│   │
+│   └── scraper/          # Web scraping components
+│       ├── __init__.py
+│       ├── api_client.py # EasyJet API client
+│       └── models.py     # Data models for API responses
+│
+├── setup_database.py     # Database initialization script
+├── initial_data.py      # Script to populate initial data
+├── test_database.py     # Database testing utilities
+└── requirements.txt     # Project dependencies
 ```
 
-Each module is designed to be independent and focused on a single responsibility, making the code easier to understand and maintain.
+## Prerequisites
+- Python 3.8 or higher
+- PostgreSQL database server
+- pip (Python package manager)
 
-## Understanding the Code
+## Installation
 
-Let's look at a simple example of how the components work together:
-
-```python
-from src.api_client import EasyJetAPIClient
-from src.config import APIConfig
-from src.data_manager import DataManager
-
-# Create a configuration
-config = APIConfig.get_default_config(
-    currency="EUR",
-    departure="ZRH",
-    arrival="FCO"
-)
-
-# Initialize the API client
-client = EasyJetAPIClient(config)
-
-# Fetch fares for a specific date
-response = client.fetch_fares_for_date("2025-02-01")
-
-# Save the results
-data_manager = DataManager()
-data_manager.save_results([response])
-```
-
-This example demonstrates how the different components collaborate while maintaining clear boundaries of responsibility.
-
-## Learning From This Project
-
-Here are some key learning opportunities this project provides:
-
-1. **API Interaction**: Learn how to make HTTP requests, handle responses, and manage rate limiting.
-2. **Data Modeling**: Understand how to structure data using classes and dataclasses in Python.
-3. **Error Handling**: See practical examples of robust error handling and logging.
-4. **Configuration Management**: Learn how to manage application settings effectively.
-5. **Code Organization**: Study how to structure a Python project for maintainability.
-
-## Documentation
-
-For more detailed information, check out:
-- [Development Guide](docs/development.md) - Setting up your development environment
-- [Usage Guide](docs/usage.md) - Detailed usage instructions
-
-
----
-
-# Italiano
-
-Un'applicazione Python che ti aiuta a monitorare e analizzare le tariffe dei voli EasyJet nel tempo. Questo progetto dimostra importanti concetti di sviluppo software tra cui l'interazione con le API, la gestione dei dati e la progettazione modulare delle applicazioni.
-
-## Panoramica del Progetto
-
-Ti sei mai chiesto come cambiano i prezzi dei voli nel tempo? Questa applicazione aiuta a rispondere a questa domanda raccogliendo e analizzando automaticamente le tariffe dei voli EasyJet. È progettata per essere sia uno strumento pratico che una risorsa di apprendimento per capire come funzionano le moderne API web e l'elaborazione dei dati.
-
-### Caratteristiche Principali
-
-L'applicazione ti permette di:
-- Cercare voli su più date
-- Confrontare i prezzi tra diverse rotte
-- Salvare i dati delle tariffe per analisi storiche
-- Configurare ricerche con parametri personalizzati
-- Gestire le risposte API in modo affidabile e sicuro
-
-### Perché Questo Progetto è Importante
-
-Comprendere come interagire con le API web ed elaborare i dati è una competenza cruciale nello sviluppo software moderno. Questo progetto fornisce esperienza pratica con:
-- Interazione con API del mondo reale
-- Modellazione e trasformazione dei dati
-- Gestione degli errori e logging
-- Gestione della configurazione
-- Progettazione dell'interfaccia a riga di comando
-
-## Per Iniziare
-
-### Prerequisiti
-
-Prima di iniziare, assicurati di avere Python 3.8 o superiore installato. Puoi verificare la tua versione di Python eseguendo:
-
+1. Clone the repository:
 ```bash
-python --version
+git clone [your-repository-url]
+cd Bot-Easyjet
 ```
 
-### Installazione
-
-1. Clona il repository:
-   ```bash
-   git clone https://github.com/tuousername/easyjet-fare-tracker.git
-   cd easyjet-fare-tracker
-   ```
-
-2. Crea e attiva un ambiente virtuale:
-   ```bash
-   # Su Windows
-   python -m venv venv
-   venv\Scripts\activate
-
-   # Su macOS/Linux
-   python -m venv venv
-   source venv/bin/activate
-   ```
-
-3. Installa le dipendenze:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-## Uso Base
-
-Il modo più semplice per iniziare è eseguire:
-
+2. Install required packages:
 ```bash
-python main.py
+pip install -r requirements.txt
 ```
 
-Questo cercherà voli usando le impostazioni predefinite (da Zurigo a Roma per i prossimi tre giorni). Per personalizzare la tua ricerca:
+3. Create a `.env` file in the project root with your database configuration:
+```
+DB_USER=postgres
+DB_PASSWORD=your_password
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=flight_tracker
+```
 
+Right now it is:
+```
+DB_USER=postgres
+DB_PASSWORD=1234
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=flight_tracker
+```
+
+4. Set up the database:
 ```bash
-python main.py --start-date 2025-02-01 --days 5 --departure-airport LHR --arrival-airport CDG
+python setup_database.py
 ```
 
-Per istruzioni d'uso più dettagliate, consulta la nostra [Documentazione d'Uso](docs/usage.md).
-
-## Struttura del Progetto
-
-Il progetto è organizzato in diversi moduli, ognuno con una responsabilità specifica:
-
-```
-easyjet-fare-tracker/
-├── src/
-│   ├── api_client.py    # Gestisce la comunicazione API
-│   ├── cli.py          # Interfaccia riga di comando
-│   ├── config.py       # Gestione configurazione
-│   ├── data_manager.py # Persistenza dei dati
-│   └── models.py       # Strutture dati
-├── docs/
-│   ├── api.md          # Documentazione API
-│   ├── development.md  # Guida allo sviluppo
-│   └── usage.md        # Istruzioni d'uso
-├── main.py             # Punto di ingresso applicazione
-└── requirements.txt    # Dipendenze del progetto
+5. Initialize basic data:
+```bash
+python initial_data.py
 ```
 
-Ogni modulo è progettato per essere indipendente e concentrato su una singola responsabilità, rendendo il codice più facile da capire e mantenere.
+## Database Schema
+The project uses a relational database with the following main tables:
+- `airlines`: Stores airline information
+- `airports`: Stores airport details
+- `routes`: Connects airports and airlines
+- `flights`: Stores flight schedule information
+- `search_operations`: Records each price search operation
+- `price_snapshots`: Stores historical price data
 
-## Comprendere il Codice
+## Usage
+The system can be used to:
+1. Fetch current flight prices from EasyJet
+2. Store pricing data in a database
+3. Analyze historical price trends
 
-Vediamo un esempio semplice di come i componenti lavorano insieme:
-
-```python
-from src.api_client import EasyJetAPIClient
-from src.config import APIConfig
-from src.data_manager import DataManager
-
-# Crea una configurazione
-config = APIConfig.get_default_config(
-    currency="EUR",
-    departure="ZRH",
-    arrival="FCO"
-)
-
-# Inizializza il client API
-client = EasyJetAPIClient(config)
-
-# Recupera le tariffe per una data specifica
-response = client.fetch_fares_for_date("2025-02-01")
-
-# Salva i risultati
-data_manager = DataManager()
-data_manager.save_results([response])
+Basic usage:
+```bash
+python main.py --departure-airport ZRH --arrival-airport FCO --start-date 2025-08-05 --days 5
 ```
 
-Questo esempio dimostra come i diversi componenti collaborano mantenendo chiari i confini di responsabilità.
+Command line arguments:
+- `--start-date`: Start date for fare search (YYYY-MM-DD)
+- `--days`: Number of days to fetch fares for (default: 3)
+- `--departure-airport`: Departure airport code (default: ZRH)
+- `--arrival-airport`: Arrival airport code (default: FCO)
+- `--currency`: Currency for fare prices (default: EUR)
+- `--output-dir`: Directory to store output files (default: data)
 
-## Imparare da Questo Progetto
+## Testing
+To verify the database functionality:
+```bash
+python test_database.py
+```
 
-Ecco alcune opportunità di apprendimento chiave che questo progetto offre:
+This will run a series of tests to ensure:
+- Database connectivity
+- Data insertion and retrieval
+- Price history tracking
 
-1. **Interazione API**: Impara come effettuare richieste HTTP, gestire risposte e gestire il rate limiting.
-2. **Modellazione Dati**: Comprendi come strutturare i dati usando classi e dataclass in Python.
-3. **Gestione Errori**: Vedi esempi pratici di gestione errori e logging robusti.
-4. **Gestione Configurazione**: Impara come gestire efficacemente le impostazioni dell'applicazione.
-5. **Organizzazione del Codice**: Studia come strutturare un progetto Python per la manutenibilità.
+## Project Status
+Current Features:
+- EasyJet API integration
+- Automated price data collection
+- Database storage of flight prices
+- Basic price analysis capabilities
 
-## Documentazione
+Future Plans:
+- Support for additional airlines
+- Web interface for data visualization
+- Advanced price analytics
+- Price prediction features
 
-Per informazioni più dettagliate, consulta:
-- [Guida allo Sviluppo](docs/development.md) - Configurare il tuo ambiente di sviluppo
-- [Guida all'Uso](docs/usage.md) - Istruzioni d'uso dettagliate
+## Technical Details
+- The project uses SQLAlchemy for database operations
+- Alembic handles database migrations
+- Data is fetched through EasyJet's public API
+- Rate limiting is implemented to respect API constraints
 
-## Contribuire
+## Notes for Developers
+- The system is designed to be modular, allowing easy addition of new airlines
+- API responses are cached in JSON files as backup
+- Database operations are wrapped in transactions for data integrity
+- The project follows Python package structure conventions
 
-I contributi sono benvenuti! Ecco come puoi aiutare:
-1. Fai un fork del repository
-2. Crea un branch per la feature
-3. Fai le tue modifiche
-4. Invia una pull request
+## Troubleshooting
+Common issues and solutions:
+1. Database connection errors:
+   - Verify PostgreSQL is running
+   - Check .env file configuration
+   - Ensure database exists and is accessible
 
-Per maggiori dettagli sul nostro processo di sviluppo, consulta la [Documentazione di Sviluppo](docs/development.md).
+2. Import errors:
+   - Run scripts from project root directory
+   - Verify Python environment has all requirements installed
+
+3. API errors:
+   - Check internet connectivity
+   - Verify API endpoint is accessible
+   - Review rate limiting settings
+
