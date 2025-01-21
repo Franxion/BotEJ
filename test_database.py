@@ -18,7 +18,7 @@ def analyze_flight_data():
             JOIN price_snapshots ps ON ps.search_id = so.id
             JOIN flights f ON ps.flight_id = f.id
             ORDER BY so.timestamp DESC, f.departure_datetime
-            LIMIT 10;
+            LIMIT 100;
         """)
 
         result = db.execute(query)
